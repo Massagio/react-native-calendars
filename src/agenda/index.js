@@ -111,10 +111,12 @@ export default class AgendaView extends Component {
   }
 
   onLayout(event) {
-    this.viewHeight = event.nativeEvent.layout.height;
-    this.viewWidth = event.nativeEvent.layout.width;
-    this.calendar.scrollToDay(this.state.selectedDay.clone(), this.calendarOffset(), false);
-    this.forceUpdate();
+    if (this.viewHeight !== event.nativeEvent.layout.height || this.viewWidth !== event.nativeEvent.layout.width) {
+      this.viewHeight = event.nativeEvent.layout.height;
+      this.viewWidth = event.nativeEvent.layout.width;
+      this.calendar.scrollToDay(this.state.selectedDay.clone(), this.calendarOffset(), false);
+      this.forceUpdate();
+    }
   }
 
   onTouchStart() {
@@ -329,7 +331,7 @@ export default class AgendaView extends Component {
               theme={this.props.theme}
               onVisibleMonthsChange={this.onVisibleMonthsChange.bind(this)}
               ref={(c) => this.calendar = c}
-              minDate={this.props.minDate} 
+              minDate={this.props.minDate}
               maxDate={this.props.maxDate}
               selected={[this.state.selectedDay]}
               current={this.currentMonth}
